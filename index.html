@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Motion Design 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#8b5cf6',
+                        darkBg: '#050505',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="fluid-text text-2xl text-white/50 mb-4" id="loading-text"></div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill" id="loading-bar-fill"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
+
+    <!-- Grain Overlay -->
+    <div class="grain-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center mix-blend-difference" id="main-nav">
+        <div class="fluid-text text-xl text-white tracking-tight">
+            <span class="text-accent" id="nav-logo"></span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm font-light text-white/80" id="desktop-nav-links"></div>
+        <button class="md:hidden text-white" id="menu-toggle">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="fixed inset-0 bg-darkBg z-40 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500" id="mobile-menu">
+        <div class="flex flex-col items-center gap-8 text-3xl font-light text-white" id="mobile-nav-links"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="h-screen flex items-center justify-center relative overflow-hidden" id="hero">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[100px] animate-pulse"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px] animate-pulse" style="animation-delay: 0.5s"></div>
+        </div>
+        
+        <div class="relative z-10 flex flex-col items-center text-center px-6">
+            <div class="overflow-hidden mb-2">
+                <p class="text-sm uppercase tracking-[0.3em] text-accent font-medium" id="hero-label"></p>
+            </div>
+            <div class="overflow-hidden mb-4">
+                <h1 class="fluid-text text-[12vw] leading-none" id="hero-heading"></h1>
+            </div>
+            <p class="text-lg md:text-xl font-light text-gray-400 max-w-lg mb-10 opacity-0" id="hero-subheading"></p>
+            <div class="magnetic-wrap" id="magnetic-wrap">
+                <button class="magnetic-btn px-10 py-4 text-sm uppercase tracking-wider text-white border border-white/20 bg-white/5 backdrop-blur-md" id="hero-btn"></button>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0" id="scroll-hint">
+            <span class="text-xs uppercase tracking-widest text-gray-500" id="scroll-text"></span>
+            <div class="w-px h-12 bg-gradient-to-b from-gray-500 to-transparent"></div>
+        </div>
+
+        <div class="glow-line bottom-0 left-0"></div>
+    </section>
+
+    <!-- Marquee Section -->
+    <section class="py-16 overflow-hidden border-y border-white/5" id="marquee-section">
+        <div class="marquee-track" id="marquee-content"></div>
+    </section>
+
+    <!-- About / Intro Section -->
+    <section class="py-32 px-6" id="about">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="order-2 lg:order-1">
+                <div class="reveal-container mb-8" id="about-img-container">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000" 
+                         alt="Abstract digital art" 
+                         class="w-full h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-700 parallax-img"
+                         id="about-img">
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <span class="badge mb-6 inline-block" id="about-badge"></span>
+                <h2 class="fluid-text text-5xl md:text-6xl lg:text-7xl leading-none mb-6 reveal-text" id="about-heading"></h2>
+                <p class="text-gray-400 font-light text-lg leading-relaxed mb-6 reveal-text" id="about-text1"></p>
+                <p class="text-gray-500 font-light text-base leading-relaxed mb-8 reveal-text" id="about-text2"></p>
+                <div class="flex gap-4 reveal-text" id="about-badges"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-32 px-6 bg-gradient-to-b from-transparent via-accent/5 to-transparent" id="stats">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="fluid-text text-5xl md:text-6xl mb-4 reveal-text" id="stats-heading"></h2>
+                <p class="text-gray-400 font-light max-w-md mx-auto reveal-text" id="stats-subheading"></p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="stats-cards"></div>
+        </div>
+    </section>
+
+    <!-- Work Showcase Section -->
+    <section class="py-32 px-6" id="work">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-16">
+                <div>
+                    <span class="badge mb-4 inline-block" id="work-badge"></span>
+                    <h2 class="fluid-text text-5xl md:text-6xl reveal-text" id="work-heading"></h2>
+                </div>
+                <div class="hidden md:block reveal-text">
+                    <a href="#" class="text-gray-400 hover:text-accent transition-colors text-sm uppercase tracking-wider flex items-center gap-2" id="work-view-all"></a>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="work-projects"></div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-32 px-6" id="services">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div>
+                    <span class="badge mb-6 inline-block" id="services-badge"></span>
+                    <h2 class="fluid-text text-5xl md:text-6xl leading-none mb-8 reveal-text" id="services-heading"></h2>
+                    <p class="text-gray-400 font-light text-lg leading-relaxed reveal-text" id="services-description"></p>
+                </div>
+                <div class="flex flex-col gap-8" id="features-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Horizontal Scroll Showcase -->
+    <section class="py-32 overflow-hidden" id="horizontal-section">
+        <div class="px-6 mb-12 max-w-7xl mx-auto">
+            <span class="badge mb-6 inline-block" id="horizontal-badge"></span>
+            <h2 class="fluid-text text-5xl md:text-6xl reveal-text" id="horizontal-heading"></h2>
+        </div>
+        <div class="horizontal-scroll px-6" id="horizontal-container"></div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="py-32 px-6 relative" id="quote">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="text-accent text-8xl font-serif opacity-20 mb-8 reveal-text">"</div>
+            <blockquote class="fluid-text text-3xl md:text-5xl lg:text-6xl leading-tight mb-8 reveal-text" id="quote-text"></blockquote>
+            <div class="reveal-text">
+                <p class="text-gray-400 font-medium" id="quote-author"></p>
+                <p class="text-gray-600 text-sm mt-1" id="quote-author-title"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-32 px-6 relative overflow-hidden" id="contact">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px]"></div>
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto text-center">
+            <h2 class="fluid-text text-6xl md:text-8xl lg:text-9xl leading-none mb-8 reveal-text" id="cta-heading"></h2>
+            <p class="text-gray-400 font-light text-xl mb-12 reveal-text" id="cta-text"></p>
+            <div class="magnetic-wrap" id="magnetic-wrap-cta">
+                <button class="magnetic-btn px-14 py-5 text-base uppercase tracking-wider text-white border border-white/20 bg-white/5 backdrop-blur-md" id="cta-btn"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <section class="min-h-[60vh] bg-zinc-100 flex items-center justify-center text-black relative overflow-hidden" id="footer">
+        <div class="glow-line top-0 left-0 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50"></div>
+        <h2 class="fluid-text text-[15vw] leading-none" id="footer-text"></h2>
+    </section>
+
+    <!-- Bottom Footer -->
+    <footer class="bg-zinc-200 px-6 py-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="fluid-text text-lg text-black/80">
+                <span class="text-accent" id="footer-logo"></span> © <span id="footer-year"></span>
+            </div>
+            <div class="flex gap-8 text-sm text-black/50" id="footer-social"></div>
+        </div>
+    </footer>
+
+    <!-- Knihovny -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    
+    <!-- Aplikace -->
+    <script type="module" src="content.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
